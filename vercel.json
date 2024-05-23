@@ -11,9 +11,5 @@
       "src": "/(.*)",
       "dest": "/app.py"
     }
-  ],
-  "env": {
-    "API_KEY": "34583d847bb34e128d658a90b0119a7d",
-    "WEATHER_API_KEY": "9c3aac1db2cb34834f49d6eece299f6f"
-  }
+  ]
 }
