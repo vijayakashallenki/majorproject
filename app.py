@@ -9,6 +9,14 @@ CORS(app)
 API_KEY = os.getenv('API_KEY')
 WEATHER_API_KEY = os.getenv('WEATHER_API_KEY')
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    if path!= "" and os.path.exists("static/" + path):
+        return send_from_directory('static', path)
+    else:
+        return "Not Found", 404
+
 @app.route('/location1', methods=['GET'])
 def get_locations():
     place = request.args.get('text')
@@ -51,14 +59,7 @@ def get_weather():
     except Exception as e:
         app.logger.exception('An error occurred while fetching weather data')
         return jsonify({'error': 'Internal Server Error'}), 500
-        
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    if path!= "" and os.path.exists("static/" + path):
-        return send_from_directory('static', path)
-    else:
-        return "Not Found", 404
+    
 
 if __name__ == '__main__':
     app.run(debug=True, port=5090)
