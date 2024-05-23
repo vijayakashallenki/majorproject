@@ -6,8 +6,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-API_KEY = process.env.API_KEY
-WEATHER_API_KEY = process.env.WEATHER_API_KEY
+API_KEY = os.environ['API_KEY']
+WEATHER_API_KEY = os.environ['WEATHER_API_KEY']
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
