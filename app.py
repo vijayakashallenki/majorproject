@@ -4,19 +4,15 @@ import requests
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app) 
+CORS(app)
 
-# Your Geoapify and Weather API keys from environment variables
 API_KEY = os.getenv('API_KEY')
 WEATHER_API_KEY = os.getenv('WEATHER_API_KEY')
 
 @app.route('/location1', methods=['GET'])
 def get_locations():
     place = request.args.get('text')
-    print(place)
-    country_code_filter = request.args.get('filter')
-    country_code_filter="in"
-    print(country_code_filter)
+    country_code_filter = request.args.get('filter', 'in')
     url = f'https://api.geoapify.com/v1/geocode/search?text={place}&filter=countrycode:{country_code_filter}&apiKey={API_KEY}'
     response = requests.get(url)
     if response.status_code == 200:
@@ -37,7 +33,7 @@ def get_places():
         return jsonify(response.json())
     else:
         return jsonify({'error': 'Failed to fetch places'}), response.status_code
-    
+
 @app.route('/weather', methods=['GET'])
 def get_weather():
     lat = request.args.get('lat')
